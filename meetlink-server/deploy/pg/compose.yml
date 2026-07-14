@@ -1,0 +1,43 @@
+# MeetLink Docker Compose — 仅 meetlink-server
+# 依赖外部 postgres 容器 + 系统 nginx
+
+services:
+  meetlink-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: meetlink-server
+    volumes:
+      - /root/meetlink/data:/meetlink/data
+      - /root/meetlink/logs:/meetlink/logs
+    ports:
+      - "9100:9100"
+      - "9200:9200"
+    environment:
+      MEETLINK_DB_USER: ${MEETLINK_DB_USER}
+      MEETLINK_DB_PASSWORD: ${MEETLINK_DB_PASSWORD}
+      MEETLINK_LOG_PATH: /meetlink/logs/meetlink.log
+      MEETLINK_PASSWORD: ${MEETLINK_PASSWORD}
+      MEETLINK_ADMIN_EMAIL: ${MEETLINK_ADMIN_EMAIL}
+      MEETLINK_LIMIT: ${MEETLINK_LIMIT}
+      MEETLINK_NAME: ${MEETLINK_NAME}
+      MEETLINK_EXPIRES: ${MEETLINK_EXPIRES}
+      MEETLINK_JWT_SECRET: ${MEETLINK_JWT_SECRET}
+      MEETLINK_JWT_EXPIRES_DAYS: ${MEETLINK_JWT_EXPIRES_DAYS}
+      MEETLINK_SSH_ENABLED: ${MEETLINK_SSH_ENABLED}
+      MEETLINK_SSH_PASSWORD: ${MEETLINK_SSH_PASSWORD}
+      MEETLINK_DOUBAO_API_KEY: ${MEETLINK_DOUBAO_API_KEY}
+      MEETLINK_DOUBAO_COUNT_LIMIT: ${MEETLINK_DOUBAO_COUNT_LIMIT}
+      MEETLINK_DOUBAO_LENGTH_LIMIT: ${MEETLINK_DOUBAO_LENGTH_LIMIT}
+      MEETLINK_DOUBAO_MODEL: ${MEETLINK_DOUBAO_MODEL}
+      MEETLINK_DEEPSEEK_API_KEY: ${MEETLINK_DEEPSEEK_API_KEY}
+      MEETLINK_DEEPSEEK_COUNT_LIMIT: ${MEETLINK_DEEPSEEK_COUNT_LIMIT}
+      MEETLINK_DEEPSEEK_LENGTH_LIMIT: ${MEETLINK_DEEPSEEK_LENGTH_LIMIT}
+      MEETLINK_DEEPSEEK_MODEL: ${MEETLINK_DEEPSEEK_MODEL}
+    restart: unless-stopped
+    networks:
+      - easystudy_default
+
+networks:
+  easystudy_default:
+    external: true

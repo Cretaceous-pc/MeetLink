@@ -1,0 +1,64 @@
+version: '3.8'
+services:
+  mariadb:
+    image: mariadb:10.11
+    container_name: mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - /meetlink/mariadb:/var/lib/mysql
+
+  meetlink-web:
+    build:
+      context: ../../../meetlink-web
+      dockerfile: Dockerfile
+    container_name: meetlink-web
+    ports:
+      - "80:80"
+    depends_on:
+      - meetlink-server
+    environment:
+      SERVER_NAME: ${SERVER_NAME}
+      SERVER_HTTP_URL: http://${SERVER_NAME}
+      SERVER_WS_URL: ws://${SERVER_NAME}
+
+  meetlink-server:
+    build:
+      context: ../..
+      dockerfile: Dockerfile
+    container_name: meetlink-server
+    volumes:
+      - /meetlink/data:/meetlink/data
+      - /meetlink/logs:/meetlink/logs
+    ports:
+      - "9100:9100"
+      - "9200:9200"
+    depends_on:
+      - mariadb
+    environment:
+      SQLITE_FILE_PATH: ${SQLITE_FILE_PATH}
+      MEETLINK_LOG_PATH: ${MEETLINK_LOG_PATH}
+      MEETLINK_PASSWORD: ${MEETLINK_PASSWORD}
+      MEETLINK_LIMIT: ${MEETLINK_LIMIT}
+      MEETLINK_NAME: ${MEETLINK_NAME}
+      MEETLINK_EXPIRES: ${MEETLINK_EXPIRES}
+      MEETLINK_JWT_SECRET: ${MEETLINK_JWT_SECRET}
+      MEETLINK_JWT_EXPIRES_DAYS: ${MEETLINK_JWT_EXPIRES_DAYS}
+      MEETLINK_SSH_ENABLED: ${MEETLINK_SSH_ENABLED}
+      MEETLINK_SSH_PASSWORD: ${MEETLINK_SSH_PASSWORD}
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+      MEETLINK_DOUBAO_API_KEY: ${MEETLINK_DOUBAO_API_KEY}
+      MEETLINK_DOUBAO_COUNT_LIMIT: ${MEETLINK_DOUBAO_COUNT_LIMIT}
+      MEETLINK_DOUBAO_LENGTH_LIMIT: ${MEETLINK_DOUBAO_LENGTH_LIMIT}
+      MEETLINK_DOUBAO_MODEL: ${MEETLINK_DOUBAO_MODEL}
+      MEETLINK_DEEPSEEK_API_KEY: ${MEETLINK_DEEPSEEK_API_KEY}
+      MEETLINK_DEEPSEEK_COUNT_LIMIT: ${MEETLINK_DEEPSEEK_COUNT_LIMIT}
+      MEETLINK_DEEPSEEK_LENGTH_LIMIT: ${MEETLINK_DEEPSEEK_LENGTH_LIMIT}
+      MEETLINK_DEEPSEEK_MODEL: ${MEETLINK_DEEPSEEK_MODEL}

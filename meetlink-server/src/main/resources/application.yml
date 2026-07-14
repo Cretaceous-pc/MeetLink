@@ -1,0 +1,59 @@
+server:
+  port: 9200
+
+spring:
+  datasource:
+    #sqlite
+    #    url: jdbc:sqlite:D:\linyu-mini.db #数据库文件路径（修改成实际路径）
+    #    driver-class-name: org.sqlite.JDBC
+    #    username:
+    #    password:
+    #mariadb配置 (兼容 MySQL 协议)
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/meetlink?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: '1234'
+  hikari:
+    minimum-idle: 3
+    maximum-pool-size: 10
+    max-lifetime: 30000
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss.SSS
+    time-zone: Asia/Shanghai
+
+logging:
+  file:
+    name: /meetlink/logs/meetlink.log
+
+mybatis:
+  table:
+    auto: update
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+meetlink:
+  password: ${MEETLINK_PASSWORD:cheng} #群聊密码
+  admin-email: ${MEETLINK_ADMIN_EMAIL:you@example.com} #超级管理员邮箱，用此邮箱登录的用户自动成为管理员
+  limit: 100 #在线人数限制
+  name: MeetLink在线聊天室 #群聊名称
+  expires: 7 #数据过期时间（天）
+  jwt:
+    secret: meetlink-E7Ymu64s #JWT签名密钥
+    expires-days: 30 #JWT有效期（天）
+  ssh:
+    enabled: false #SSH服务开关（生产环境建议关闭）
+    password: ${MEETLINK_SSH_PASSWORD:} #SSH登录密码
+  doubao: #豆包
+    enabled: ${MEETLINK_DOUBAO_ENABLED:false}
+    api-key: ${MEETLINK_DOUBAO_API_KEY:}
+    count-limit: 5 #次数限制,0-不限制
+    length-limit: 50 #内容长度限制,0-不限制
+    model: doubao-1-5-pro-32k-250115
+  deep-seek: #deep seek
+    enabled: ${MEETLINK_DEEPSEEK_ENABLED:true}
+    api-key: ${MEETLINK_DEEPSEEK_API_KEY:}
+    count-limit: 2 #次数限制,0-不限制
+    length-limit: 50 #内容长度限制,0-不限制
+    model: deepseek-v4-flash

@@ -1,0 +1,53 @@
+server:
+  port: 9200
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://postgres:5432/meetlink
+    username: ${MEETLINK_DB_USER}
+    password: ${MEETLINK_DB_PASSWORD}
+  hikari:
+    minimum-idle: 3
+    maximum-pool-size: 10
+    max-lifetime: 30000
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss.SSS
+    time-zone: Asia/Shanghai
+
+logging:
+  file:
+    name: ${MEETLINK_LOG_PATH}
+
+mybatis:
+  table:
+    auto: update
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+meetlink:
+  password: ${MEETLINK_PASSWORD} #群聊密码
+  admin-email: ${MEETLINK_ADMIN_EMAIL:} #超级管理员邮箱
+  limit: ${MEETLINK_LIMIT} #在线人数限制
+  name: ${MEETLINK_NAME} #群聊名称
+  expires: ${MEETLINK_EXPIRES} #数据过期时间（天）
+  jwt:
+    secret: ${MEETLINK_JWT_SECRET} #JWT签名密钥
+    expires-days: ${MEETLINK_JWT_EXPIRES_DAYS:30} #JWT有效期（天）
+  ssh:
+    enabled: ${MEETLINK_SSH_ENABLED:false} #SSH服务开关
+    password: ${MEETLINK_SSH_PASSWORD} #SSH登录密码
+  doubao: #豆包
+    enabled: ${MEETLINK_DOUBAO_ENABLED:true}
+    api-key: ${MEETLINK_DOUBAO_API_KEY}
+    count-limit: ${MEETLINK_DOUBAO_COUNT_LIMIT} #次数限制,0-不限制
+    length-limit: ${MEETLINK_DOUBAO_LENGTH_LIMIT} #内容长度限制,0-不限制
+    model: ${MEETLINK_DOUBAO_MODEL}
+  deep-seek: # deepseek
+    enabled: ${MEETLINK_DEEPSEEK_ENABLED:true}
+    api-key: ${MEETLINK_DEEPSEEK_API_KEY}
+    count-limit: ${MEETLINK_DEEPSEEK_COUNT_LIMIT} #次数限制,0-不限制
+    length-limit: ${MEETLINK_DEEPSEEK_LENGTH_LIMIT} #内容长度限制,0-不限制
+    model: ${MEETLINK_DEEPSEEK_MODEL}
