@@ -12,7 +12,7 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://localhost:3306/meetlink?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root
-    password: '1234'
+    password: ${DB_PASSWORD:1234}
   hikari:
     minimum-idle: 3
     maximum-pool-size: 10
@@ -40,7 +40,7 @@ meetlink:
   name: MeetLink在线聊天室 #群聊名称
   expires: 7 #数据过期时间（天）
   jwt:
-    secret: meetlink-E7Ymu64s #JWT签名密钥
+    secret: ${MEETLINK_JWT_SECRET:change-me} #JWT签名密钥
     expires-days: 30 #JWT有效期（天）
   ssh:
     enabled: false #SSH服务开关（生产环境建议关闭）
