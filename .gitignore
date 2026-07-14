@@ -1,0 +1,61 @@
+# ===================
+# Maven / Java
+# ===================
+target/
+*.class
+*.jar
+*.war
+*.nar
+*.ear
+*.log
+*.tmp
+
+# Maven wrapper
+!.mvn/wrapper/maven-wrapper.jar
+
+# ===================
+# Node.js / Vue
+# ===================
+node_modules/
+dist/
+.nuxt/
+.vite/
+*.local
+
+# ===================
+# IDE
+# ===================
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.DS_Store
+
+# ===================
+# OS
+# ===================
+Thumbs.db
+Desktop.ini
+
+# ===================
+# Environment / Secrets
+# ===================
+.env
+.env.*
+!.env.example
+
+# ===================
+# Docker
+# ===================
+docker-compose.override.yml
+
+# ===================
+# Build output
+# ===================
+build/
+out/
